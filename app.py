@@ -13,7 +13,7 @@ def raiz():
 
 @app.route("/route", methods=["GET"])
 def route():
-    return "Vai Corinthians!"
+    return "Vai Palmeiras!"
 
 
 @app.route("/status", methods=["GET"])

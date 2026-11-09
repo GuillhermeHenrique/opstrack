@@ -109,6 +109,40 @@ A aplicação será iniciada em modo de desenvolvimento e pode ser acessada loca
 http://127.0.0.1:5000
 ```
 
+## Rodando com Docker
+
+A aplicação também pode ser executada em container com Docker.
+
+### Build da imagem
+
+```bash
+docker build -t opstrack:latest .
+```
+
+### Executando o container
+
+```bash
+docker run -d --rm -p 8000:8000 --name opstrack-api opstrack:latest
+```
+
+A API ficará disponível em:
+
+```text
+http://localhost:8000/status
+```
+
+A rota `/status` responde com um JSON contendo o status da aplicação:
+
+```json
+{"status": "ok"}
+```
+
+### Parar o container
+
+```bash
+docker stop opstrack-api
+```
+
 ## Endpoints disponíveis
 
 A API possui os seguintes endpoints:

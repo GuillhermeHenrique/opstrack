@@ -30,3 +30,25 @@ jobs:
 
       - name: Testes e cobertura (pytest)
         run: python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=85
+
+  docker:
+    name: docker
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Construir imagem Docker
+        run: docker build -t opstrack:${{ github.sha }} .
+
+      - name: Rodar container Docker
+        run: |
+          docker run -d --rm -p 8000:8000 --name opstrack-api opstrack:${{ github.sha }}
+          sleep 5
+          curl -fsS http://127.0.0.1:8000/status
+
+      - name: Encerrar container
+        if: always()
+        run: docker stop opstrack-api
